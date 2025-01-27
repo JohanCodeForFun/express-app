@@ -12,6 +12,10 @@ const requestTime = function(req, res, next) {
 
 app.use(requestTime)
 app.use(myMiddleware)
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.statusCode || 500).send(err.message)
+})
 
 app.use('/authors', authorRouter)
 app.use('/books', bookRouter)
